@@ -1,0 +1,5 @@
+en:
+  theme_metadata:
+    description: Rewrite URLs for a particular group
+    settings:
+      example_setting: A description of a setting.
