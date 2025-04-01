@@ -1,2 +1,6 @@
-example_setting:
-  default: true
+old_url:
+  default: "https://dronescene.co.uk"
+new_url:
+  default: "https://beta.dronescene.co.uk"
+group_name:
+  default: "beta-testers"
