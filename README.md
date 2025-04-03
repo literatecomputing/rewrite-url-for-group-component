@@ -1,5 +1,5 @@
 # Rewrite URLs
 
-**Theme Summary**
+**Rewrite href= URLs for members of a specific group**
 
-For more information, please see: **url to meta topic**
+For https://greyarro.ws/
