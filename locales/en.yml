@@ -2,4 +2,4 @@ en:
   theme_metadata:
     description: Rewrite URLs for a particular group
     settings:
-      example_setting: A description of a setting.
+      rewrite_all_urls: Also rewrite new_url links back to old_url for users not in the group.

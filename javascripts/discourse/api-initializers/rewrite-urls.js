@@ -1,22 +1,24 @@
 import { apiInitializer } from "discourse/lib/api";
 
 export default apiInitializer((api) => {
-  // Your code here (uncomment api above to use it)
   const user = api.getCurrentUser();
   api.decorateCookedElement((element) => {
-    // see if user.group includes settings.group_name
-    const groupName = settings.group_name;
-    const group = user.groups.find((g) => g.name === groupName);
-    if (!group) {
+    const inGroup = !!user?.groups?.some((g) => g.name === settings.group_name);
+    // in group: old_url -> new_url; not in group: new_url -> old_url
+    let from, to;
+    if (inGroup) {
+      from = settings.old_url;
+      to = settings.new_url;
+    } else if (settings.rewrite_all_urls) {
+      from = settings.new_url;
+      to = settings.old_url;
+    } else {
       return;
     }
-    const urls = element.querySelectorAll("a[href]") || [];
-    urls.forEach((url) => {
-      const oldUrl = settings.old_url;
-      const newUrl = settings.new_url;
-      const href = url.getAttribute("href");
-      if (href && href.startsWith(oldUrl)) {
-        url.setAttribute("href", href.replace(oldUrl, newUrl));
+    element.querySelectorAll("a[href]").forEach((a) => {
+      const href = a.getAttribute("href");
+      if (href?.startsWith(from)) {
+        a.setAttribute("href", href.replace(from, to));
       }
     });
   });
