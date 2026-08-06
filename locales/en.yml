@@ -2,4 +2,6 @@ en:
   theme_metadata:
     description: Rewrite URLs for a particular group
     settings:
-      example_setting: A description of a setting.
+      old_url: The production site URL. Everyone NOT in the group sees only these links.
+      new_url: The beta site URL. Group members see only these links.
+      group_name: Members of this group see new_url links; everyone else sees old_url links.
