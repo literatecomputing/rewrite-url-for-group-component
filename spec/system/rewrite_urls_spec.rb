@@ -10,40 +10,34 @@ RSpec.describe "Rewrite URLs for group members" do
     Fabricate(
       :post,
       topic: topic,
-      raw: "[old](https://dronescene.co.uk/page) [new](https://beta.dronescene.co.uk/page)",
+      raw:
+        "[old](https://dronescene.co.uk/page) [new](https://beta.dronescene.co.uk/page) and https://dronescene.co.uk/plain inline",
     )
   end
 
   before { group.add(member) }
 
-  def enable_rewrite_all_urls
-    theme.update_setting(:rewrite_all_urls, true)
-    theme.save!
-  end
-
-  it "rewrites old_url links to new_url for group members" do
+  it "members see only new_url links, with link text rewritten too" do
     sign_in(member)
     visit(topic.url)
     expect(page).to have_css("a[href='https://beta.dronescene.co.uk/page']", count: 2)
+    expect(page).to have_link(
+      "https://beta.dronescene.co.uk/plain",
+      href: "https://beta.dronescene.co.uk/plain",
+    )
+    expect(page).to have_no_css("a[href^='https://dronescene.co.uk']")
   end
 
-  it "leaves links untouched for non-members by default" do
-    sign_in(outsider)
-    visit(topic.url)
-    expect(page).to have_css("a[href='https://dronescene.co.uk/page']")
-    expect(page).to have_css("a[href='https://beta.dronescene.co.uk/page']")
-  end
-
-  it "rewrites new_url links back to old_url for non-members when rewrite_all_urls is on" do
-    enable_rewrite_all_urls
+  it "non-members see only old_url links" do
     sign_in(outsider)
     visit(topic.url)
     expect(page).to have_css("a[href='https://dronescene.co.uk/page']", count: 2)
+    expect(page).to have_no_css("a[href^='https://beta.dronescene.co.uk']")
   end
 
-  it "rewrites new_url links back to old_url for anonymous users when rewrite_all_urls is on" do
-    enable_rewrite_all_urls
+  it "anonymous users see only old_url links" do
     visit(topic.url)
     expect(page).to have_css("a[href='https://dronescene.co.uk/page']", count: 2)
+    expect(page).to have_no_css("a[href^='https://beta.dronescene.co.uk']")
   end
 end

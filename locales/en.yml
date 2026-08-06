@@ -2,7 +2,6 @@ en:
   theme_metadata:
     description: Rewrite URLs for a particular group
     settings:
-      old_url: The URL as it appears in posts (the production site). Group members get these links rewritten to new_url.
-      new_url: The URL group members are sent to (the beta site).
-      group_name: Members of this group get old_url links rewritten to new_url.
-      rewrite_all_urls: Also rewrite new_url links back to old_url for users NOT in the group (so non-members never see beta links).
+      old_url: The production site URL. Everyone NOT in the group sees only these links.
+      new_url: The beta site URL. Group members see only these links.
+      group_name: Members of this group see new_url links; everyone else sees old_url links.

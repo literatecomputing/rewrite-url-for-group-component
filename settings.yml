@@ -4,6 +4,3 @@ new_url:
   default: "https://beta.dronescene.co.uk"
 group_name:
   default: "beta-testers"
-rewrite_all_urls:
-  type: bool
-  default: false
